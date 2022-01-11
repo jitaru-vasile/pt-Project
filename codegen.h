@@ -151,8 +151,8 @@ private:
   void EmitPeek(uint32_t index);
   /// Emit a return instruction.
   void EmitReturn();
-  /// Emit a times opcode.
-  void EmitTimes();
+  /// Emit a MUL opcode.
+  void EmitMUL();
   /// Emit a div opcode.
   void EmitDiv();
   /// Emit a mod opcode.

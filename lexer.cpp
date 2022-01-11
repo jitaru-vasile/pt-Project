@@ -144,15 +144,15 @@ std::ostream &operator<<(std::ostream &os, const Token::Kind kind)
     case Token::Kind::MOD: return os << "%";
     case Token::Kind::PLUS: return os << "+";
     case Token::Kind::MINUS: return os << "-";
-    case Token::Kind::TIMES: return os << "*";
+    case Token::Kind::MUL: return os << "*";
     case Token::Kind::GREATER: return os << ">";
     case Token::Kind::LOWER: return os << "<";
     case Token::Kind::END: return os << "END";
     case Token::Kind::INT: return os << "INT";
     case Token::Kind::STRING: return os << "STRING";
     case Token::Kind::IDENT: return os << "IDENT";
-    case Token::Kind::LOWER_EQUAL: return os << "<=";
-    case Token::Kind::GREATER_EQUAL: return os << ">=";
+    case Token::Kind::LW_EQUAL: return os << "<=";
+    case Token::Kind::GR_EQUAL: return os << ">=";
     case Token::Kind::EQUAL_EQUAL: return os << "==";
     case Token::Kind::OR: return os << "||";
     case Token::Kind::AND: return os << "&&";
@@ -219,7 +219,7 @@ const Token &Lexer::Next()
         return tk_ = Token::Equal(loc);
       }
     }
-    case '*': return NextChar(), tk_ = Token::Times(loc);
+    case '*': return NextChar(), tk_ = Token::MUL(loc);
     case '/': return NextChar(), tk_ = Token::Div(loc);
     case '%': return NextChar(), tk_ = Token::Mod(loc);
     case '+': return NextChar(), tk_ = Token::Plus(loc);

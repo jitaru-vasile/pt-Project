@@ -50,7 +50,7 @@ public:
     COMMA,
     PLUS,
     MINUS,
-    TIMES, 
+    MUL, 
     DIV,
     MOD,
     LOWER, 
@@ -62,8 +62,8 @@ public:
     STRING,
     IDENT,
     END,
-    LOWER_EQUAL,
-    GREATER_EQUAL,
+    LW_EQUAL,
+    GR_EQUAL,
     EQUAL_EQUAL
   };
 
@@ -119,7 +119,7 @@ public:
   static Token Colon(const Location &l) { return Token(l, Kind::COLON); }
   static Token Semi(const Location &l) { return Token(l, Kind::SEMI); }
   static Token Equal(const Location &l) { return Token(l, Kind::EQUAL); } 
-  static Token Times(const Location &l) { return Token(l, Kind::TIMES); }
+  static Token MUL(const Location &l) { return Token(l, Kind::MUL); }
   static Token Div(const Location &l) { return Token(l, Kind::DIV); }
   static Token Mod(const Location &l) { return Token(l, Kind::MOD); }
   static Token Plus(const Location &l) { return Token(l, Kind::PLUS); }
@@ -128,8 +128,8 @@ public:
   static Token Or(const Location &l) { return Token(l, Kind::OR); }
   static Token Greater(const Location &l) { return Token(l, Kind::GREATER); }
   static Token Lower(const Location &l) { return Token(l, Kind::LOWER); }
-  static Token GreaterEqual(const Location &l) { return Token(l, Kind::GREATER_EQUAL); }
-  static Token LowerEqual(const Location &l) { return Token(l, Kind::LOWER_EQUAL); }
+  static Token GreaterEqual(const Location &l) { return Token(l, Kind::GR_EQUAL); }
+  static Token LowerEqual(const Location &l) { return Token(l, Kind::LW_EQUAL); }
   static Token EqualEqual(const Location &l) { return Token(l, Kind::EQUAL_EQUAL); }
   static Token Comma(const Location &l) { return Token(l, Kind::COMMA); }
   static Token Func(const Location &l) { return Token(l, Kind::FUNC); }

@@ -53,7 +53,24 @@ void Interp::Run()
         }
         continue;
       }
-      case Opcode::TIMES: {
+      case Opcode::ADD: {
+        auto rhs = PopInt();
+        auto lhs = PopInt();
+        long res = lhs + rhs;
+        if(res < 0 && lhs >= 0 && rhs >= 0) {
+          throw RuntimeError("overflow error");
+        }
+        
+        Push(res);
+        continue;
+      }
+      case Opcode::SUB: {
+        auto rhs = PopInt();
+        auto lhs = PopInt();
+        Push(lhs - rhs);
+        continue;
+      }
+      case Opcode::MUL: {
         auto rhs = PopInt();
         auto lhs = PopInt();
         long res = lhs * rhs;
@@ -87,23 +104,6 @@ void Interp::Run()
         Push(res);
         continue;
       }
-      case Opcode::ADD: {
-        auto rhs = PopInt();
-        auto lhs = PopInt();
-        long res = lhs + rhs;
-        if(res < 0 && lhs >= 0 && rhs >= 0) {
-          throw RuntimeError("overflow error");
-        }
-        
-        Push(res);
-        continue;
-      }
-      case Opcode::SUB: {
-        auto rhs = PopInt();
-        auto lhs = PopInt();
-        Push(lhs - rhs);
-        continue;
-      }
       case Opcode::AND: {
         auto rhs = PopInt();
         auto lhs = PopInt();
@@ -128,7 +128,7 @@ void Interp::Run()
         Push(res);
         continue;
       }
-      case Opcode::GREATER_EQUAL: {
+      case Opcode::GR_EQUAL: {
         auto rhs = PopInt();
         auto lhs = PopInt();
         long res = lhs <= rhs;
@@ -144,7 +144,7 @@ void Interp::Run()
         Push(res);
         continue;
       }
-      case Opcode::LOWER_EQUAL: {
+      case Opcode::LW_EQUAL: {
         auto rhs = PopInt();
         auto lhs = PopInt();
         long res = lhs >= rhs;

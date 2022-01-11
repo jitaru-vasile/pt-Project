@@ -230,20 +230,15 @@ void Codegen::LowerBinaryExpr(const Scope &scope, const BinaryExpr &binary)
   LowerExpr(scope, binary.GetLHS());
   LowerExpr(scope, binary.GetRHS());
   switch (binary.GetKind()) {
-    case BinaryExpr::Kind::TIMES: {
-      return EmitTimes();
+    
+    case BinaryExpr::Kind::MUL: {
+      return EmitMUL();
     }
     case BinaryExpr::Kind::DIV: {
       return EmitDiv();
     }
     case BinaryExpr::Kind::MOD: {
       return EmitMod();
-    }
-    case BinaryExpr::Kind::ADD: {
-      return EmitAdd();
-    }
-    case BinaryExpr::Kind::SUB: {
-      return EmitSub();
     }
     case BinaryExpr::Kind::AND: {
       return EmitAnd();
@@ -254,13 +249,13 @@ void Codegen::LowerBinaryExpr(const Scope &scope, const BinaryExpr &binary)
     case BinaryExpr::Kind::GREATER: {
       return EmitGreater();
     }
-    case BinaryExpr::Kind::GREATER_EQUAL: {
+    case BinaryExpr::Kind::GR_EQUAL: {
       return EmitGreaterEqual();
     }
     case BinaryExpr::Kind::LOWER: {
       return EmitLower();
     }
-    case BinaryExpr::Kind::LOWER_EQUAL: {
+    case BinaryExpr::Kind::LW_EQUAL: {
       return EmitLowerEqual();
     }
     case BinaryExpr::Kind::EQUAL_EQUAL: {
@@ -398,11 +393,11 @@ void Codegen::EmitReturn()
 }
 
 // -----------------------------------------------------------------------------
-void Codegen::EmitTimes()
+void Codegen::EmitMUL()
 {
   assert(depth_ > 0 && "no elements on stack");
   depth_ -= 1;
-  Emit<Opcode>(Opcode::TIMES);
+  Emit<Opcode>(Opcode::MUL);
 }
 
 // -----------------------------------------------------------------------------
@@ -466,7 +461,7 @@ void Codegen::EmitGreaterEqual()
 {
   assert(depth_ > 0 && "no elements on stack");
   depth_ -= 1;
-  Emit<Opcode>(Opcode::GREATER_EQUAL);
+  Emit<Opcode>(Opcode::GR_EQUAL);
 }
 
 // -----------------------------------------------------------------------------
@@ -482,7 +477,7 @@ void Codegen::EmitLowerEqual()
 {
   assert(depth_ > 0 && "no elements on stack");
   depth_ -= 1;
-  Emit<Opcode>(Opcode::LOWER_EQUAL);
+  Emit<Opcode>(Opcode::LW_EQUAL);
 }
 
 // -----------------------------------------------------------------------------

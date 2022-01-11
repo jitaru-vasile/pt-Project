@@ -184,7 +184,6 @@ std::shared_ptr<Expr> Parser::ParseTermExpr()
     }
   }
 }
-
 // -----------------------------------------------------------------------------
 std::shared_ptr<Expr> Parser::ParseCallExpr()
 {
@@ -203,7 +202,6 @@ std::shared_ptr<Expr> Parser::ParseCallExpr()
   }
   return callee;
 }
-
 // -----------------------------------------------------------------------------
 std::shared_ptr<Expr> Parser::ParseAddSubExpr()
 {
@@ -223,16 +221,15 @@ std::shared_ptr<Expr> Parser::ParseAddSubExpr()
 
   return term;
 }
-
 // -----------------------------------------------------------------------------
 std::shared_ptr<Expr> Parser::ParseMulDivModExpr()
 {
   std::shared_ptr<Expr> term = ParseCallExpr();
-  while (Current().Is(Token::Kind::TIMES) || Current().Is(Token::Kind::DIV) || Current().Is(Token::Kind::MOD)) {
-    if (Current().Is(Token::Kind::TIMES)) {
+  while (Current().Is(Token::Kind::MUL) || Current().Is(Token::Kind::DIV) || Current().Is(Token::Kind::MOD)) {
+    if (Current().Is(Token::Kind::MUL)) {
       lexer_.Next();
       auto rhs = ParseCallExpr();
-      term = std::make_shared<BinaryExpr>(BinaryExpr::Kind::TIMES, term, rhs);
+      term = std::make_shared<BinaryExpr>(BinaryExpr::Kind::MUL, term, rhs);
     } else if (Current().Is(Token::Kind::DIV)) {
       lexer_.Next();
       auto rhs = ParseCallExpr();
@@ -247,16 +244,15 @@ std::shared_ptr<Expr> Parser::ParseMulDivModExpr()
 
   return term;
 }
-
 // -----------------------------------------------------------------------------
 std::shared_ptr<Expr> Parser::ParseAndOrExpr()
 {
   std::shared_ptr<Expr> term = ParseCallExpr();
-  while (Current().Is(Token::Kind::TIMES) || Current().Is(Token::Kind::DIV) || Current().Is(Token::Kind::MOD)) {
-    if (Current().Is(Token::Kind::TIMES)) {
+  while (Current().Is(Token::Kind::MUL) || Current().Is(Token::Kind::DIV) || Current().Is(Token::Kind::MOD)) {
+    if (Current().Is(Token::Kind::MUL)) {
       lexer_.Next();
       auto rhs = ParseCallExpr();
-      term = std::make_shared<BinaryExpr>(BinaryExpr::Kind::TIMES, term, rhs);
+      term = std::make_shared<BinaryExpr>(BinaryExpr::Kind::MUL, term, rhs);
     } else if (Current().Is(Token::Kind::DIV)) {
       lexer_.Next();
       auto rhs = ParseCallExpr();
@@ -271,30 +267,29 @@ std::shared_ptr<Expr> Parser::ParseAndOrExpr()
 
   return term;
 }
-
 // -----------------------------------------------------------------------------
 std::shared_ptr<Expr> Parser::ParseEqualGreaterLowerExpr()
 {
   std::shared_ptr<Expr> term = ParseAddSubExpr();
-  while (Current().Is(Token::Kind::GREATER) || Current().Is(Token::Kind::GREATER_EQUAL) || 
-         Current().Is(Token::Kind::LOWER) || Current().Is(Token::Kind::LOWER_EQUAL) ||
+  while (Current().Is(Token::Kind::GREATER) || Current().Is(Token::Kind::GR_EQUAL) || 
+         Current().Is(Token::Kind::LOWER) || Current().Is(Token::Kind::LW_EQUAL) ||
          Current().Is(Token::Kind::EQUAL_EQUAL)) {
     if (Current().Is(Token::Kind::GREATER)) {
       lexer_.Next();
       auto rhs = ParseAddSubExpr();
       term = std::make_shared<BinaryExpr>(BinaryExpr::Kind::GREATER, term, rhs);
-    } else if (Current().Is(Token::Kind::GREATER_EQUAL)) {
+    } else if (Current().Is(Token::Kind::GR_EQUAL)) {
       lexer_.Next();
       auto rhs = ParseAddSubExpr();
-      term = std::make_shared<BinaryExpr>(BinaryExpr::Kind::GREATER_EQUAL, term, rhs);
+      term = std::make_shared<BinaryExpr>(BinaryExpr::Kind::GR_EQUAL, term, rhs);
     } else if (Current().Is(Token::Kind::LOWER)) {
       lexer_.Next();
       auto rhs = ParseAddSubExpr();
       term = std::make_shared<BinaryExpr>(BinaryExpr::Kind::LOWER, term, rhs);
-    } else if (Current().Is(Token::Kind::LOWER_EQUAL)) {
+    } else if (Current().Is(Token::Kind::LW_EQUAL)) {
       lexer_.Next();
       auto rhs = ParseAddSubExpr();
-      term = std::make_shared<BinaryExpr>(BinaryExpr::Kind::LOWER_EQUAL, term, rhs);
+      term = std::make_shared<BinaryExpr>(BinaryExpr::Kind::LW_EQUAL, term, rhs);
     } else {
       lexer_.Next();
       auto rhs = ParseAddSubExpr();

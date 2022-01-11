@@ -1,8 +1,7 @@
-
 func print_int(a: int): int = "print_int"
 func read_int(): int = "read_int"
 
-func helper(a: int, n: int, b: int): int {
+func acc(a: int, b: int, n: int): int {
   if (n % 2 == 0) {
       return b * b
     } else {
@@ -14,7 +13,7 @@ func exp(a: int, n: int): int {
   if (n == 0) {
     return 1
   } else {
-    return helper(a, n, exp(a, n/2)) 
+    return acc(a, exp(a, n/2), n) 
   }
 }
 
